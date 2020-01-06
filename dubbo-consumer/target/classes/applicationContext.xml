@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dubbo.apache.org/schema/dubbo
+        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 给dubbo应用命名 -->
+    <dubbo:application name="hello-dubbo">
+        <dubbo:parameter key="qos.enable" value="false" />
+    </dubbo:application>
+
+    <!-- 配置Dubbo服务注册中心（这里使用的是基于multicast协议的注册中心） -->
+<!--    <dubbo:registry address="multicast://224.5.6.8:1234?unicast=false" />-->
+    <!-- 配置基于zookeeper的服务注册中心  -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181?client=curator" />
+    <!-- 配置基于redis的服务注册中心 -->
+    <!--<dubbo:registry address="redis://localhost:6379" />-->
+
+    <!-- 指定Dubbo底层在远程调用服务时通过什么协议，哪个端口调用 -->
+    <dubbo:protocol name="dubbo" />
+
+    <dubbo:reference id="calcService" interface="com.lanou.dubbo.service.ICalcService" />
+    <!--<dubbo:reference id="calcService" interface="com.lanou3g.dubbo.service.ICalcService" url="dubbo://10.10.110.223:20880" />-->
+
+</beans>
